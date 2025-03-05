@@ -1,15 +1,15 @@
-name: New KernelSU Next SUSFS Ace2Pro
+name: New KernelSU Next SUSFS Ace3Pro
 on:
   workflow_dispatch:
     inputs:
       CPU:
         description: "分支"
         required: true
-        default: 'sm8550'
+        default: 'sm8650'
       FEIL:
         description: "配置文件"
         required: true
-        default: 'oneplus_ace2pro_v'
+        default: 'oneplus_ace3_pro_v'
       CPUD:
         description: "处理器代号"
         required: true
@@ -17,11 +17,11 @@ on:
       ANDROID_VERSION:
         description: "内核安卓版本"
         required: true
-        default: 'android13'
+        default: 'android14'
       KERNEL_VERSION:
         description: "内核版本"
         required: true
-        default: '5.15'
+        default: '6.1'
       BUILD_METHOD:
         description: "编译方式"
         required: true
@@ -58,7 +58,7 @@ jobs:
       - name: Configure Git
         run: |
          git config --global user.name "build"
-         git config --global user.email "263623064@qq.com"
+         git config --global user.email "1701778257@qq.com"
 
       - name: Install dependencies
         run: |
@@ -80,6 +80,8 @@ jobs:
          rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
          sed -i 's/ -dirty//g' kernel_platform/common/scripts/setlocalversion
          sed -i 's/ -dirty//g' kernel_platform/msm-kernel/scripts/setlocalversion
+         sed -i 's|echo "$res".*|echo "$res-qiuran"|' kernel_platform/common/scripts/setlocalversion
+         sed -i 's|echo "$res".*|echo "$res-qiuran"|' kernel_platform/msm-kernel/scripts/setlocalversion
 
       - name: Set up KernelSU Next
         if: github.event.inputs.KSUNEXT_ENABLED == 'true'
