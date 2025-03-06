@@ -1,4 +1,4 @@
-name: New KernelSU Next SUSFS 12
+name: New KernelSU Next SUSFS PadPro
 on:
   workflow_dispatch:
     inputs:
@@ -9,11 +9,11 @@ on:
       FEIL:
         description: "配置文件"
         required: true
-        default: 'oneplus12_v'
+        default: 'oneplus_pad2_v'
       CPUD:
         description: "处理器代号"
         required: true
-        default: 'kalama'
+        default: 'pineapple'
       ANDROID_VERSION:
         description: "内核安卓版本"
         required: true
@@ -50,7 +50,6 @@ jobs:
         with:
           root-reserve-mb: 24576
           temp-reserve-mb: 8192
-          swap-size-mb: 16384
           remove-dotnet: 'true'
           remove-android: 'true'
           remove-haskell: 'true'
@@ -139,6 +138,7 @@ jobs:
       - name: Apply new hook and add configuration
         run: |
          cd kernel_workspace/kernel_platform
+         echo "CONFIG_LOCALVERSION_AUTO=n" >> ./common/arch/arm64/configs/gki_defconfig
          echo "CONFIG_KSU=y" >> ./common/arch/arm64/configs/gki_defconfig
          echo "CONFIG_KSU_WITH_KPROBES=n" >> ./common/arch/arm64/configs/gki_defconfig
          echo "CONFIG_KSU_SUSFS=y" >> ./common/arch/arm64/configs/gki_defconfig
@@ -171,8 +171,7 @@ jobs:
         run: |
          git clone https://github.com/Numbersf/AnyKernel3 --depth=1
          rm -rf ./AnyKernel3/.git
-         cp kernel_workspace/kernel_platform/out/msm-kernel-pineapple-gki/dist/Image ./AnyKernel3/
-
+         cp kernel_workspace/kernel_platform/out/msm-kernel-${{ github.event.inputs.CPUD }}-gki/dist/Image ./AnyKernel3/
       - name: Download SUSFS Module
         run: |
          wget https://github.com/sidex15/ksu_module_susfs/releases/latest/download/ksu_module_susfs_1.5.2+.zip
