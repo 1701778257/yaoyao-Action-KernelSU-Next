@@ -57,8 +57,8 @@ jobs:
 
       - name: Configure Git
         run: |
-         git config --global user.name "build"
-         git config --global user.email "263623064@qq.com"
+         git config --global user.name "qiuran"
+         git config --global user.email "1701778257@qq.com"
 
       - name: Install dependencies
         run: |
@@ -80,6 +80,8 @@ jobs:
          rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
          sed -i 's/ -dirty//g' kernel_platform/common/scripts/setlocalversion
          sed -i 's/ -dirty//g' kernel_platform/msm-kernel/scripts/setlocalversion
+         sed -i 's|echo "$res".*|echo "${res%%-*}-android14-11-qiuran"|' kernel_platform/common/scripts/setlocalversion
+         sed -i 's|echo "$res".*|echo "${res%%-*}-android14-11-qiuran"|' kernel_platform/msm-kernel/scripts/setlocalversion
 
       - name: Set up KernelSU Next
         if: github.event.inputs.KSUNEXT_ENABLED == 'true'
