@@ -5,27 +5,27 @@ on:
       CPU:
         description: "分支"
         required: true
-        default: 'sm8650'
+        default: 'sm8750'
       FEIL:
         description: "配置文件"
         required: true
-        default: 'oneplus_ace5'
+        default: 'oneplus_ace5_pro'
       CPUD:
         description: "处理器代号"
         required: true
-        default: 'kalama'
+        default: 'sun'
       ANDROID_VERSION:
         description: "内核安卓版本"
         required: true
-        default: 'android14'
+        default: 'android15'
       KERNEL_VERSION:
         description: "内核版本"
         required: true
-        default: '6.1'
+        default: '6.6'
       BUILD_METHOD:
         description: "编译方式"
         required: true
-        default: 'gki'
+        default: 'perf'
       KSUNEXT_ENABLED:
         description: "添加 KSU Next"
         required: true
@@ -80,8 +80,8 @@ jobs:
          rm kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
          sed -i 's/ -dirty//g' kernel_platform/common/scripts/setlocalversion
          sed -i 's/ -dirty//g' kernel_platform/msm-kernel/scripts/setlocalversion
-         sed -i 's|echo "$res".*|echo "${res%%-*}-android14-11-qiuran"|' kernel_platform/common/scripts/setlocalversion
-         sed -i 's|echo "$res".*|echo "${res%%-*}-android14-11-qiuran"|' kernel_platform/msm-kernel/scripts/setlocalversion
+         sed -i 's|echo "$res".*|echo "${res%%-*}-android15-8-qiuran"|' kernel_platform/common/scripts/setlocalversion
+         sed -i 's|echo "$res".*|echo "${res%%-*}-android15-8-qiuran"|' kernel_platform/msm-kernel/scripts/setlocalversion
 
       - name: Set up KernelSU Next
         if: github.event.inputs.KSUNEXT_ENABLED == 'true'
