@@ -101,10 +101,14 @@ jobs:
          git clone https://gitlab.com/simonpunk/susfs4ksu.git -b gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}
          git clone https://github.com/TheWildJames/kernel_patches.git
          cd kernel_platform
-         cp ../kernel_patches/next/0001-kernel-patch-susfs-v1.5.5-to-KernelSU-Next-v1.0.5.patch ./KernelSU-Next/
          cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ github.event.inputs.ANDROID_VERSION }}-${{ github.event.inputs.KERNEL_VERSION }}.patch ./common/
-         cp -r ../susfs4ksu/kernel_patches/fs/* ./common/fs/
-         cp -r ../susfs4ksu/kernel_patches/include/linux/* ./common/include/linux/
+         cp ../kernel_patches/next/syscall_hooks.patch ./common/
+         cp ../kernel_patches/next/0001_susfs_157_for_ksunext.patch ./KernelSU-Next/
+         cp ../kernel_patches/001-lz4.patch ./common/
+         cp ../kernel_patches/002-zstd.patch ./common/
+         cp ../susfs4ksu/kernel_patches/fs/* ./common/fs/
+         cp ../susfs4ksu/kernel_patches/include/linux/* ./common/include/linux/
+
 
          # Apply patches
          cd ./KernelSU-Next
